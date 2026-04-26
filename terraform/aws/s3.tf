@@ -20,6 +20,13 @@ resource "aws_s3_bucket" "data" {
   })
 }
 
+resource "aws_s3_bucket_public_access_block" "data" {
+  bucket                  = aws_s3_bucket.data.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 resource "aws_s3_bucket_object" "data_object" {
   bucket = aws_s3_bucket.data.id
   key    = "customer-master.xlsx"
@@ -62,6 +69,13 @@ resource "aws_s3_bucket" "financials" {
 
 }
 
+resource "aws_s3_bucket_public_access_block" "financials" {
+  bucket                  = aws_s3_bucket.financials.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 resource "aws_s3_bucket" "operations" {
   # bucket is not encrypted
   # bucket does not have access logs
@@ -86,6 +100,13 @@ resource "aws_s3_bucket" "operations" {
   })
 }
 
+resource "aws_s3_bucket_public_access_block" "operations" {
+  bucket                  = aws_s3_bucket.operations.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 resource "aws_s3_bucket" "data_science" {
   # bucket is not encrypted
   bucket = "${local.resource_prefix.value}-data-science"
@@ -110,6 +131,13 @@ resource "aws_s3_bucket" "data_science" {
   }
 }
 
+resource "aws_s3_bucket_public_access_block" "data_science" {
+  bucket                  = aws_s3_bucket.data_science.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 resource "aws_s3_bucket" "logs" {
   bucket = "${local.resource_prefix.value}-logs"
   acl    = "log-delivery-write"
@@ -138,4 +166,12 @@ resource "aws_s3_bucket" "logs" {
     git_repo             = "terragoat"
     yor_trace            = "01946fe9-aae2-4c99-a975-e9b0d3a4696c"
   })
+}
+
+resource "aws_s3_bucket_public_access_block" "logs" {
+  bucket                  = aws_s3_bucket.logs.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
