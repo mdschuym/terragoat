@@ -3,6 +3,7 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
   location            = var.location
   name                = "terragoat-aks-${var.environment}"
   resource_group_name = azurerm_resource_group.example.name
+  local_account_disabled = true
   identity {
     type = "SystemAssigned"
   }
@@ -21,6 +22,10 @@ resource azurerm_kubernetes_cluster "k8s_cluster" {
   }
   role_based_access_control {
     enabled = false
+  }
+  azure_active_directory_role_based_access_control {
+    azure_rbac_enabled = true
+    admin_group_object_ids = ["<your-azure-ad-group-object-id>"]
   }
   tags = {
     git_commit           = "898d5beaec7ffdef6df0d7abecff407362e2a74e"
